@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node global-setup.js"
+    "start": "node global-setup.js",
+    "test": "npx playwright codegen https://myanimelist.net/manga.php"
   },
   "type": "module",
   "keywords": [],

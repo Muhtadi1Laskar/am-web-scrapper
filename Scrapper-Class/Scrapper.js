@@ -17,8 +17,6 @@ export class Genre {
         const data = await this.getValues();
 
         this.utils.saveJson(data, type);
-
-        return data;
     }
 
     async selectGenre(genre) {

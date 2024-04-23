@@ -10,7 +10,7 @@ import { Genre } from './Scrapper-Class/Scrapper.js';
 
   page.setDefaultTimeout(100000);
 
-  const data = await genre.main('anime', 'Comedy');
+  await genre.main('anime', 'Comedy');
 
   await browser.close();
 })();
