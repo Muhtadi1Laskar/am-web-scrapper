@@ -1,5 +1,5 @@
 import { chromium } from '@playwright/test';
-import { Genre } from './Scrapper-Class/Scrapper.js';
+import { Genre } from './Scrapper-Class/GenreScrapper.js';
 
 (async () => {
   const browser = await chromium.launch({
@@ -10,7 +10,7 @@ import { Genre } from './Scrapper-Class/Scrapper.js';
 
   page.setDefaultTimeout(100000);
 
-  await genre.main('anime', 'Comedy');
+  await genre.main('anime', 'Sci-Fi');
 
   await browser.close();
 })();
