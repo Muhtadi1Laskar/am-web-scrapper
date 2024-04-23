@@ -84,7 +84,7 @@ export class Locator {
             totalEpisode: totalEpisodeContent,
             episodeDuration: episodeDurationContent,
             genre: genreContent,
-            summary: summaryContent,
+            summary: summaryContent.replace(/\\n/g, ' '),
             studio: studioContent,
             source: sourceContent,
             score: scoreIntValue,

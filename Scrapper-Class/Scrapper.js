@@ -1,11 +1,24 @@
 import { Locator } from '../Utils/locator.js';
+import { Utils } from '../Utils/utils.js';
 
 export class Genre {
     constructor(page) {
         this.page = page;
         this.locator = new Locator(page);
+        this.utils = new Utils();
 
         this.url = '';
+    }
+
+    async main(format='anime', type='comedy') {
+        await this.visit(format);
+        await this.selectGenre(type);
+        
+        const data = await this.getValues();
+
+        this.utils.saveJson(data, type);
+
+        return data;
     }
 
     async selectGenre(genre) {
