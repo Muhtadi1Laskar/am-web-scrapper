@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node global-setup.js",
-    "test": "npx playwright codegen https://myanimelist.net/manga.php"
+    "test": "npx playwright codegen https://myanimelist.net/anime.php"
   },
   "type": "module",
   "keywords": [],

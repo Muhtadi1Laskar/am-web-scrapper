@@ -1,4 +1,4 @@
-import { Locator } from '../Utils/locator.js';
+import { Locator } from '../Utils/genreLocator.js';
 import { Utils } from '../Utils/utils.js';
 
 export class Genre {
@@ -16,7 +16,7 @@ export class Genre {
         
         const data = await this.getValues();
 
-        this.utils.saveJson(data, type);
+        this.utils.saveJson(data, type, 'Genre');
     }
 
     async selectGenre(genre) {

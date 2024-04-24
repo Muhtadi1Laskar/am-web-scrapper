@@ -4,21 +4,34 @@ export class Utils {
     constructor() {
 
     }
+
     extractMeaningfulWords(str) {
         str = str.trim();
         const words = str.split(/\s*\+\s*/).join("");
         return words;
     }
 
-    genreBtnLocator(genreName) {
-        return 
+    removeStopWord(str, word) {
+        const newStr = str.replace(word, '').trim();
+        return newStr;
     }
 
-    saveJson(data, type) {
+    genreBtnLocator(genreName) {
+        return
+    }
+
+    async waitForLocatorState(locator, state = 'visible') {
+        await locator.waitFor({
+            state: state
+        });
+    }
+
+    saveJson(data, type, folder) {
+        const filePath = `Data/${folder}/${type}.json`;
         const formattedData = JSON.stringify(data);
 
-        fs.writeFileSync(`Data/Genre/${type}.json`, formattedData, 'utf-8', (err) => {
-            if(err) {
+        fs.writeFileSync(filePath, formattedData, 'utf-8', (err) => {
+            if (err) {
                 console.error(err);
                 return;
             }
