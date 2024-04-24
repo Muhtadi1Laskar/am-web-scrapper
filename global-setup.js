@@ -1,6 +1,6 @@
 import { chromium } from '@playwright/test';
 import { Genre } from './Scrapper-Class/GenreScrapper.js';
-import { SearchScrapper } from './Scrapper-Class/SearchScrapper.js';
+import { SearchScrapper } from './Scrapper-Class/SearchAnimeScrapper.js';
 
 (async () => {
   const browser = await chromium.launch({
