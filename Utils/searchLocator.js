@@ -16,48 +16,83 @@ export class SearchLocator {
         this.statTabLocator = this.page.locator(this.statTabSelector);
         this.dataObject = {};
         this.dataWrapper = [];
+        this.titles = {
+            anime: [
+                "Synonyms",
+                "Japanese",
+                "English",
+                "Type",
+                "Episodes",
+                "Status",
+                "Aired",
+                "Premiered",
+                "Broadcast",
+                "Producers",
+                "Licensors",
+                "Studios",
+                "Source",
+                "Genres",
+                "Themes",
+                "Demographic",
+                "Duration",
+                "Rating",
+                "Ranked",
+                "Popularity",
+                "Members",
+                "Favorites",
+            ],
+            manga: [
+                "Japanese",
+                "Volumes",
+                "Chapters",
+                "Status",
+                "Published",
+                "Genres",
+                "Demographic",
+                "Serialization",
+                "Authors",
+                "Ranked",
+                "Popularity",
+                "Members",
+                "Favorites"
+            ]
+        };
+        this.statTitles = {
+            anime: [
+                'Watching',
+                'Completed',
+                'On-Hold',
+                'Dropped',
+                'Plan to Watch',
+                'Total'
+            ],
+            manga: [
+                'Reading',
+                'Completed',
+                'On-Hold',
+                'Dropped',
+                'Plan to Read',
+                'Total'
+            ]
+        }
     }
 
-    async getAnimeInfo() {
-        await this.utils.waitForLocatorState(this.titleLocator, "visible");
+    async getAnimeInfo(mediaFormat='anime') {
         await this.utils.waitForLocatorState(this.imageLocator, "visible");
-        const infoTitles = [
-            "Synonyms",
-            "Japanese",
-            "English",
-            "Type",
-            "Episodes",
-            "Status",
-            "Aired",
-            "Premiered",
-            "Broadcast",
-            "Producers",
-            "Licensors",
-            "Studios",
-            "Source",
-            "Genres",
-            "Themes",
-            "Demographic",
-            "Duration",
-            "Rating",
-            "Ranked",
-            "Popularity",
-            "Members",
-            "Favorites",
-        ];
+        const infoTitles = this.titles[mediaFormat];
 
         for (let elem of infoTitles) {
             let finalData = await this.getInfoLocator(elem);
             this.dataObject[elem] = finalData;
         }
         await this.getDescription();
-        await this.getCharacterData();
+        await this.getCharacterData(mediaFormat);
         await this.getImageSource();
-        await this.getStatData();
+        await this.getStatData(mediaFormat);
 
         this.dataWrapper.push(this.dataObject);
 
-        return this.dataWrapper;
+        return this.dataObject;
     }
 
     async getImageSource() {
@@ -72,9 +107,13 @@ export class SearchLocator {
         this.dataObject['description'] = description;
     }
 
-    async getCharacterData() {
-        const selector = "h3[class='h3_characters_voice_actors'] a";
-        const locator = this.page.locator(selector);
+    async getCharacterData(mediaFormat='anime') {
+        const selector = {
+            anime: "h3[class='h3_characters_voice_actors'] a",
+            manga: "div[class='detail-characters-list clearfix'] td[class='borderClass'] a"
+        };
+
+        const locator = this.page.locator(selector[mediaFormat]);
         const tags = await locator.all();
         const characterList = [];
 
@@ -95,19 +134,12 @@ export class SearchLocator {
         return finalData;
     }
 
-    async getStatData() {
+    async getStatData(mediaFormat='anime') {
         const statistics = {};
-        const infoTitles = [
-            'Watching',
-            'Completed',
-            'On-Hold',
-            'Dropped',
-            'Plan to Watch',
-            'Total'
-        ];
+        const infoTitles = this.statTitles[mediaFormat];
 
         await this.statTabLocator.click();
-        await this.page.waitForTimeout(20000);
+        await this.page.waitForTimeout(10000);
         
         for(let elem of infoTitles) {
             const stats = await this.getInfoLocator(elem); 
@@ -115,5 +147,9 @@ export class SearchLocator {
         }
 
         this.dataObject['statistics'] = statistics;
+    }
+
+    clearState() {
+        this.dataObject = {};
     }
 }

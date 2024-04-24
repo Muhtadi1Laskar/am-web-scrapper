@@ -1,13 +1,13 @@
 import { SearchLocator } from "../Utils/searchLocator.js";
 import { Utils } from "../Utils/utils.js";
 
-export class SearchScrapper {
+export class SearchMangaScrapper {
     constructor(page) {
         this.page = page;
         this.utils = new Utils();
         this.locator = new SearchLocator(page);
 
-        this.searchBarSelector = 'Search Anime...';
+        this.searchBarSelector = 'Search Manga...';
 
         this.searchBarLocator = this.page.getByPlaceholder(this.searchBarSelector);
         this.url = '';
@@ -16,10 +16,11 @@ export class SearchScrapper {
     async main(format, name) {
         await this.visit(format);
         await this.search(name);
+
         const data = await this.getInfo();
-        
+
         this.locator.clearState();
-        this.utils.saveJson(data, name, 'Anime', 'anime');
+        this.utils.saveJson(data, name, 'Manga', 'manga');
     }
 
     async visit(name = 'anime') {
@@ -28,11 +29,11 @@ export class SearchScrapper {
     }
 
     async search(name) {
-        await this.searchAnime(name);
+        await this.searchManga(name);
         await this.clickOnResult(name);
     }
 
-    async searchAnime(name) {
+    async searchManga(name) {
         await this.utils.waitForLocatorState(this.searchBarLocator, 'visible');
         await this.searchBarLocator.fill(name);
         await this.searchBarLocator.press('Enter');
@@ -47,7 +48,7 @@ export class SearchScrapper {
     }
 
     async getInfo() {
-        const data = await this.locator.getAnimeInfo("anime");
+        const data = await this.locator.getAnimeInfo("manga");
         return data;
     }
 
@@ -55,3 +56,4 @@ export class SearchScrapper {
         this.url = `https://myanimelist.net/${type}.php`;
     }
 }
+

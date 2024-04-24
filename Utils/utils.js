@@ -26,8 +26,12 @@ export class Utils {
         });
     }
 
-    saveJson(data, type, folder) {
-        const filePath = `Data/${folder}/${type}.json`;
+    saveJson(data, type, folder, mediaFormat) {
+        const filePaths = {
+            anime: `Data/Anime/${folder}/${type}.json`,
+            manga: `Data/Manga/${folder}/${type}.json`
+        };
+        const filePath = filePaths[mediaFormat];
         const formattedData = JSON.stringify(data);
 
         fs.writeFileSync(filePath, formattedData, 'utf-8', (err) => {
