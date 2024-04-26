@@ -20,6 +20,8 @@ export class SearchScrapper {
         
         this.locator.clearState();
         this.utils.saveJson(data, name, 'Anime', 'anime');
+
+        return data;
     }
 
     async visit(name = 'anime') {

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node global-setup.js",
+    "start": "node server/main-server.js",
     "test": "npx playwright codegen https://myanimelist.net/anime.php"
   },
   "type": "module",
@@ -14,5 +14,8 @@
   "devDependencies": {
     "@playwright/test": "^1.42.1",
     "@types/node": "^20.11.24"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
   }
 }

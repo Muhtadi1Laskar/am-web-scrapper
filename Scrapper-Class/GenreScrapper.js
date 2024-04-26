@@ -17,6 +17,8 @@ export class Genre {
         const data = await this.getValues();
 
         this.utils.saveJson(data, type, 'Genre', 'anime');
+
+        return data;
     }
 
     async selectGenre(genre) {

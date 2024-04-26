@@ -21,6 +21,8 @@ export class SearchMangaScrapper {
 
         this.locator.clearState();
         this.utils.saveJson(data, name, 'Manga', 'manga');
+        
+        return data;
     }
 
     async visit(name = 'anime') {

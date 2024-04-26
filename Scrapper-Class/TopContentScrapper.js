@@ -15,6 +15,7 @@ export class TopContentScrapper {
         const data = await this.locator.getInfo(totalItems);
 
         this.utils.saveJson(data, 'top-content', 'top-content', mediaFormat);
+        return data;
     }
 
     async visit(name = 'anime') {
