@@ -13,9 +13,27 @@ export class Scrapper {
     };
   }
 
-  async main({ scraperType, ...obj }) {
+  async main({ scraperType, ...scrapeOptions  }) {
+    let data;
+
     await this.startBrowser();
-    const data = await this.scrapeData(obj);
+
+    switch (scraperType) {
+      case 'genre':
+        data = await this.scrapeGenreData(scrapeOptions);
+        break;
+      case 'anime details':
+        data = await this.scrapeAnimeData(scrapeOptions);
+        break;
+      case 'manga details':
+        data = await this.scrapeMangaData(scrapeOptions);
+        break;
+      case 'top content':
+        data = await this.scrapeTopContent(scrapeOptions);
+      default:
+        throw new Error(`Unsupported scraper type: ${scraperType}`);
+    }
+
     await this.closeBrowser();
     return data;
   }
@@ -30,8 +48,26 @@ export class Scrapper {
     await this.browser.close();
   }
 
-  async scrapeData({ mediaFormat, name }) {
+  async scrapeGenreData({ mediaFormat, name }) {
     const genreScraper = new Genre(this.page);
+    const data = await genreScraper.main(mediaFormat, name);
+    return data;
+  }
+
+  async scrapeAnimeData({ mediaFormat, name }) {
+    const genreScraper = new SearchScrapper(this.page);
+    const data = await genreScraper.main(mediaFormat, name);
+    return data;
+  }
+
+  async scrapeMangaData({ mediaFormat, name }) {
+    const genreScraper = new SearchMangaScrapper(this.page);
+    const data = await genreScraper.main(mediaFormat, name);
+    return data;
+  }
+
+  async scrapeTopContent({ mediaFormat, name }) {
+    const genreScraper = new TopContentScrapper(this.page);
     const data = await genreScraper.main(mediaFormat, name);
     return data;
   }

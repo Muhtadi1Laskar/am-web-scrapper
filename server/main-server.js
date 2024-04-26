@@ -7,9 +7,9 @@ app.use(express.json());
 
 const scrapper = new Scrapper();
 const param = {
-  scrapperType: "genre",
-  mediaFormat: "anime",
-  name: "Comedy",
+  scraperType: "top content",
+  mediaFormat: "manga",
+  name: 20,
 };
 
 app.get("/scrape-genre", async (req, res) => {
