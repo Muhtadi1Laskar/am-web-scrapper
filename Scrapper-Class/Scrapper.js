@@ -30,8 +30,6 @@ export class Scrapper {
         break;
       case 'top content':
         data = await this.scrapeTopContent(scrapeOptions);
-      default:
-        throw new Error(`Unsupported scraper type: ${scraperType}`);
     }
 
     await this.closeBrowser();
